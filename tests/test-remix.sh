@@ -10,7 +10,9 @@ file() { [ -s "$1" ] || fail "missing or empty: $1"; }
 [ "$DISTRO_NAME" = KettsecOS ] || fail "unexpected KettsecOS release name"
 [ "$DISTRO_VERSION" = 3.0-preview.3 ] || fail "unexpected KettsecOS release version"
 [ "$ISO_LABEL" = KETTSECOS33 ] || fail "unexpected ISO label"
-[ -x build-iso.sh ] && [ -x build-parrot-iso.sh ] || fail "ISO build entrypoints must be executable"
+if [ ! -x build-iso.sh ] || [ ! -x build-parrot-iso.sh ]; then
+  fail "ISO build entrypoints must be executable"
+fi
 for p in \
   parrot-customize.sh build-parrot-iso.sh config-parrot.sh \
   tools/fetch-parrot.py tools/fetch-browsers.py tools/brand-parrot-boot.py \
