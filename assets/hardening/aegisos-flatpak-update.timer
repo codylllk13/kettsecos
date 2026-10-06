@@ -1,0 +1,11 @@
+[Unit]
+Description=Check system Flatpak applications for updates weekly
+
+[Timer]
+OnCalendar=weekly
+Persistent=true
+RandomizedDelaySec=2h
+Unit=aegisos-flatpak-update.service
+
+[Install]
+WantedBy=timers.target

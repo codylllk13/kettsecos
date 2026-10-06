@@ -1,0 +1,426 @@
+--- a/src/modules/partition/gui/ChoicePage.h
++++ b/src/modules/partition/gui/ChoicePage.h
+@@ -21,6 +21,7 @@
+ 
+ #include <QMutex>
+ #include <QPointer>
++#include <QString>
+ #include <QSet>
+ #include <QWidget>
+ 
+@@ -28,6 +29,7 @@
+ class QComboBox;
+ class QLabel;
+ class QListView;
++class QLineEdit;
+ 
+ namespace Calamares
+ {
+@@ -88,6 +90,14 @@
+     int lastSelectedDeviceIndex();
+     void setLastSelectedDeviceIndex( int index );
+ 
++    QString selectedDeviceNode() const;
++    QString selectedDeviceModel() const;
++    QString selectedDeviceSysfsModel() const;
++    QString selectedDeviceSerial() const;
++    qint64 selectedDeviceCapacity() const;
++    QString eraseConfirmationToken() const;
++    bool eraseConfirmationMatches() const;
++
+ signals:
+     void nextStatusChanged( bool );
+     void actionChosen();
+@@ -110,6 +120,7 @@
+ private:
+     bool calculateNextEnabled() const;
+     void updateNextEnabled();
++    void updateEraseConfirmationDisplay();
+     void setupChoices();
+     void checkInstallChoiceRadioButton( Config::InstallChoice choice );  ///< Sets the chosen button to "on"
+     /** @brief Create a panel with "boot loader location:"
+@@ -118,7 +129,7 @@
+      * to the panel's widget.
+      */
+     QWidget* createBootloaderPanel();
+-    Device* selectedDevice();
++    Device* selectedDevice() const;
+ 
+     /* Change the UI depending on the device selected. */
+     void hideButtons();  // Hide everything when no device
+@@ -165,6 +176,10 @@
+     QPointer< PartitionLabelsView > m_afterPartitionLabelsView;
+     QPointer< PartitionSplitterWidget > m_afterPartitionSplitterWidget;
+     QPointer< QComboBox > m_bootloaderComboBox;
++    QLabel* m_eraseConfirmationLabel = nullptr;
++    QLineEdit* m_eraseConfirmationEdit = nullptr;
++    Config::InstallChoice m_lastConfirmationChoice = Config::InstallChoice::NoChoice;
++
+     QPointer< QLabel > m_efiLabel;
+     QPointer< QComboBox > m_efiComboBox;
+ 
+--- a/src/modules/partition/gui/ChoicePage.cpp
++++ b/src/modules/partition/gui/ChoicePage.cpp
+@@ -51,8 +51,11 @@
+ #include <QButtonGroup>
+ #include <QComboBox>
+ #include <QDir>
++#include <QFile>
++#include <QFileInfo>
+ #include <QFutureWatcher>
+ #include <QLabel>
++#include <QLineEdit>
+ #include <QListView>
+ #include <QtConcurrent/QtConcurrent>
+ 
+@@ -111,6 +114,19 @@
+     m_drivesLayout->addWidget( m_deviceInfoWidget );
+     m_drivesLayout->addStretch();
+ 
++    m_eraseConfirmationLabel = new QLabel( this );
++    m_eraseConfirmationLabel->setWordWrap( true );
++    m_eraseConfirmationEdit = new QLineEdit( this );
++    m_eraseConfirmationEdit->setClearButtonEnabled( true );
++    m_eraseConfirmationLabel->hide();
++    m_eraseConfirmationEdit->hide();
++    m_rightLayout->insertWidget( 2, m_eraseConfirmationLabel );
++    m_rightLayout->insertWidget( 3, m_eraseConfirmationEdit );
++    connect( m_eraseConfirmationEdit,
++             &QLineEdit::textChanged,
++             this,
++             [ this ] { updateNextEnabled(); } );
++
+     m_messageLabel->setWordWrap( true );
+     m_messageLabel->hide();
+ 
+@@ -186,6 +202,8 @@
+                  m_drivesCombo->setCurrentIndex( m_lastSelectedDeviceIndex );
+              } );
+     setModelToComboBox( m_drivesCombo, core->deviceModel() );
++    // A disk must be an explicit user choice; QComboBox otherwise selects row 0.
++    m_drivesCombo->setCurrentIndex( -1 );
+ 
+     connect( m_drivesCombo, qOverload< int >( &QComboBox::currentIndexChanged ), this, &ChoicePage::applyDeviceChoice );
+     connect( m_encryptWidget, &EncryptWidget::stateChanged, this, &ChoicePage::onEncryptWidgetStateChanged );
+@@ -362,11 +380,84 @@
+  *      something goes wrong.
+  */
+ Device*
+-ChoicePage::selectedDevice()
+-{
+-    Device* const currentDevice
+-        = m_core->deviceModel()->deviceForIndex( m_core->deviceModel()->index( m_drivesCombo->currentIndex() ) );
+-    return currentDevice;
++ChoicePage::selectedDevice() const
++{
++    if ( !m_core || !m_drivesCombo || m_drivesCombo->currentIndex() < 0 )
++    {
++        return nullptr;
++    }
++    return m_core->deviceModel()->deviceForIndex( m_core->deviceModel()->index( m_drivesCombo->currentIndex() ) );
++}
++
++static QString
++blockDeviceAttribute( const QString& node, const QString& attribute )
++{
++    const QString sysfsPath = QStringLiteral( "/sys/class/block/%1/device/%2" )
++                                  .arg( QFileInfo( node ).fileName(), attribute );
++    QFile file( sysfsPath );
++    if ( !file.open( QIODevice::ReadOnly ) )
++    {
++        return {};
++    }
++    return QString::fromLocal8Bit( file.readAll() ).simplified();
++}
++
++QString
++ChoicePage::selectedDeviceNode() const
++{
++    const auto* device = selectedDevice();
++    return device ? device->deviceNode() : QString();
++}
++
++QString
++ChoicePage::selectedDeviceModel() const
++{
++    const auto* device = selectedDevice();
++    if ( !device || device->type() != Device::Type::Disk_Device )
++    {
++        return {};
++    }
++    const QString model = device->name().simplified();
++    return model.isEmpty() ? device->prettyName().simplified() : model;
++}
++
++QString
++ChoicePage::selectedDeviceSysfsModel() const
++{
++    return blockDeviceAttribute( selectedDeviceNode(), QStringLiteral( "model" ) );
++}
++
++QString
++ChoicePage::selectedDeviceSerial() const
++{
++    return blockDeviceAttribute( selectedDeviceNode(), QStringLiteral( "serial" ) );
++}
++
++qint64
++ChoicePage::selectedDeviceCapacity() const
++{
++    const auto* device = selectedDevice();
++    return device ? device->capacity() : 0;
++}
++
++QString
++ChoicePage::eraseConfirmationToken() const
++{
++    const QString model = selectedDeviceModel();
++    const QString node = selectedDeviceNode();
++    const qint64 capacity = selectedDeviceCapacity();
++    if ( model.isEmpty() || node.isEmpty() || capacity <= 0 )
++    {
++        return {};
++    }
++    return QStringLiteral( "ERASE %1 %2 %3" ).arg( model, QString::number( capacity ), node );
++}
++
++bool
++ChoicePage::eraseConfirmationMatches() const
++{
++    return m_config->installChoice() == InstallChoice::Erase && m_eraseConfirmationEdit
++        && !eraseConfirmationToken().isEmpty() && m_eraseConfirmationEdit->text() == eraseConfirmationToken();
+ }
+ 
+ void
+@@ -401,9 +492,15 @@
+ void
+ ChoicePage::applyDeviceChoice()
+ {
++    if ( m_eraseConfirmationEdit )
++    {
++        m_eraseConfirmationEdit->clear();
++    }
+     if ( !selectedDevice() )
+     {
+         hideButtons();
++        updateEraseConfirmationDisplay();
++        updateNextEnabled();
+         return;
+     }
+ 
+@@ -452,6 +549,7 @@
+         checkInstallChoiceRadioButton( m_config->installChoice() );
+     }
+ 
++    updateEraseConfirmationDisplay();
+     Q_EMIT actionChosen();
+     Q_EMIT deviceChosen();
+ }
+@@ -477,6 +575,7 @@
+         applyActionChoice( m_config->installChoice() );
+     }
+ 
++    updateEraseConfirmationDisplay();
+     updateNextEnabled();
+ }
+ 
+@@ -1521,8 +1620,14 @@
+         }
+         break;
+     case InstallChoice::Erase:
++        if ( !eraseConfirmationMatches() )
++        {
++            cDebug() << "The selected disk identity has not been confirmed";
++            return false;
++        }
++        break;
+     case InstallChoice::Manual:
+-        // Nothing to check for these
++        // Nothing to check for this choice
+         break;
+     }
+ 
+@@ -1555,6 +1660,44 @@
+     }
+ 
+     return true;
++}
++
++void
++ChoicePage::updateEraseConfirmationDisplay()
++{
++    if ( !m_eraseConfirmationEdit || !m_eraseConfirmationLabel )
++    {
++        return;
++    }
++
++    const auto choice = m_config->installChoice();
++    if ( choice != m_lastConfirmationChoice )
++    {
++        m_eraseConfirmationEdit->clear();
++        m_lastConfirmationChoice = choice;
++    }
++
++    const QString token = eraseConfirmationToken();
++    const bool visible = choice == InstallChoice::Erase && !token.isEmpty();
++    if ( visible )
++    {
++        const QString model = selectedDeviceModel();
++        const QString node = selectedDeviceNode();
++        const qint64 capacity = selectedDeviceCapacity();
++        m_eraseConfirmationLabel->setText(
++            tr( "This will erase the entire selected disk: %1 (%2 bytes, %3). Type the exact text below to continue: %4",
++                 "@info" )
++                .arg( model, QString::number( capacity ), node, token ) );
++        m_eraseConfirmationEdit->setPlaceholderText( token );
++        m_eraseConfirmationLabel->show();
++        m_eraseConfirmationEdit->show();
++    }
++    else
++    {
++        m_eraseConfirmationLabel->hide();
++        m_eraseConfirmationEdit->hide();
++        m_eraseConfirmationEdit->clear();
++    }
+ }
+ 
+ void
+--- a/src/modules/partition/PartitionViewStep.cpp
++++ b/src/modules/partition/PartitionViewStep.cpp
+@@ -26,6 +26,7 @@
+ #include "Branding.h"
+ #include "GlobalStorage.h"
+ #include "JobQueue.h"
++#include "Job.h"
+ #include "utils/Gui.h"
+ #include "utils/Logger.h"
+ #include "utils/QtCompat.h"
+@@ -38,9 +39,107 @@
+ #include <kpmcore/core/partition.h>
+ 
+ #include <QFormLayout>
++#include <QFile>
++#include <QFileInfo>
+ #include <QMessageBox>
+ #include <QStackedWidget>
+ #include <QtConcurrent/QtConcurrent>
++
++#include <fcntl.h>
++#include <linux/fs.h>
++#include <sys/ioctl.h>
++#include <sys/stat.h>
++#include <unistd.h>
++
++#include <utility>
++
++namespace
++{
++QString
++readBlockAttribute( const QString& node, const QString& attribute )
++{
++    const QString sysfsPath = QStringLiteral( "/sys/class/block/%1/device/%2" )
++                                  .arg( QFileInfo( node ).fileName(), attribute );
++    QFile file( sysfsPath );
++    if ( !file.open( QIODevice::ReadOnly ) )
++    {
++        return {};
++    }
++    return QString::fromLocal8Bit( file.readAll() ).simplified();
++}
++
++class DiskIdentityGuardJob final : public Calamares::Job
++{
++public:
++    DiskIdentityGuardJob( QString node,
++                          QString model,
++                          QString sysfsModel,
++                          QString serial,
++                          qint64 capacity,
++                          bool confirmationMatches )
++        : m_node( std::move( node ) )
++        , m_model( std::move( model ) )
++        , m_sysfsModel( std::move( sysfsModel ) )
++        , m_serial( std::move( serial ) )
++        , m_capacity( capacity )
++        , m_confirmationMatches( confirmationMatches )
++    {
++    }
++
++    QString prettyName() const override { return tr( "Verify selected disk identity", "@label" ); }
++    QString prettyStatusMessage() const override { return tr( "Verifying selected disk identity…", "@status" ); }
++
++    Calamares::JobResult exec() override
++    {
++        if ( !m_confirmationMatches || m_node.isEmpty() || m_model.isEmpty() || m_capacity <= 0 )
++        {
++            return Calamares::JobResult::error(
++                tr( "Disk identity confirmation is missing or no longer matches.", "@message" ) );
++        }
++
++        struct stat deviceStat {};
++        if ( ::stat( m_node.toLocal8Bit().constData(), &deviceStat ) != 0 || !S_ISBLK( deviceStat.st_mode ) )
++        {
++            return Calamares::JobResult::error(
++                tr( "The selected disk is no longer available as a block device.", "@message" ), m_node );
++        }
++
++        const int fd = ::open( m_node.toLocal8Bit().constData(), O_RDONLY | O_CLOEXEC );
++        if ( fd < 0 )
++        {
++            return Calamares::JobResult::error(
++                tr( "Cannot recheck the selected disk before partitioning.", "@message" ), m_node );
++        }
++        quint64 liveCapacity = 0;
++        const int ioctlResult = ::ioctl( fd, BLKGETSIZE64, &liveCapacity );
++        ::close( fd );
++        if ( ioctlResult != 0 || liveCapacity != static_cast< quint64 >( m_capacity ) )
++        {
++            return Calamares::JobResult::error(
++                tr( "The selected disk capacity changed after confirmation.", "@message" ), m_node );
++        }
++
++        const QString liveModel = readBlockAttribute( m_node, QStringLiteral( "model" ) );
++        const QString liveSerial = readBlockAttribute( m_node, QStringLiteral( "serial" ) );
++        if ( ( !m_sysfsModel.isEmpty() && liveModel != m_sysfsModel )
++             || ( !m_serial.isEmpty() && liveSerial != m_serial ) )
++        {
++            return Calamares::JobResult::error(
++                tr( "The selected disk identity changed after confirmation.", "@message" ), m_node );
++        }
++
++        return Calamares::JobResult::ok();
++    }
++
++private:
++    QString m_node;
++    QString m_model;
++    QString m_sysfsModel;
++    QString m_serial;
++    qint64 m_capacity;
++    bool m_confirmationMatches;
++};
++}  // namespace
+ 
+ PartitionViewStep::PartitionViewStep( QObject* parent )
+     : Calamares::ViewStep( parent )
+@@ -947,7 +1046,19 @@
+ Calamares::JobList
+ PartitionViewStep::jobs() const
+ {
+-    return m_core->jobs( m_config );
++    Calamares::JobList jobs = m_core->jobs( m_config );
++    if ( m_config->installChoice() == Config::InstallChoice::Erase && m_choicePage )
++    {
++        // Run this check before KPMCore's first partition write. It binds the
++        // user's typed approval to the live block node, capacity and sysfs ID.
++        jobs.prepend( Calamares::job_ptr( new DiskIdentityGuardJob( m_choicePage->selectedDeviceNode(),
++                                                                    m_choicePage->selectedDeviceModel(),
++                                                                    m_choicePage->selectedDeviceSysfsModel(),
++                                                                    m_choicePage->selectedDeviceSerial(),
++                                                                    m_choicePage->selectedDeviceCapacity(),
++                                                                    m_choicePage->eraseConfirmationMatches() ) ) );
++    }
++    return jobs;
+ }
+ 
+ Calamares::RequirementsList

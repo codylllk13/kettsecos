@@ -1,0 +1,89 @@
+// Original KettsecOS Plymouth theme.
+// A minimal text-only design keeps the ISO free of copied distro artwork.
+
+Window.SetBackgroundTopColor(0.008, 0.02, 0.01);
+Window.SetBackgroundBottomColor(0.025, 0.09, 0.035);
+
+screen_x = Window.GetX();
+screen_y = Window.GetY();
+screen_width = Window.GetWidth();
+screen_height = Window.GetHeight();
+
+mark_image = Image.Text("lllK", 0.0, 1.0, 0.25);
+mark_sprite = Sprite(mark_image);
+mark_sprite.SetPosition(
+  screen_x + (screen_width - mark_image.GetWidth()) / 2,
+  screen_y + (screen_height - mark_image.GetHeight()) / 2 - 90
+);
+
+title_image = Image.Text("KettsecOS", 0.0, 1.0, 0.25);
+title_sprite = Sprite(title_image);
+title_sprite.SetPosition(
+  screen_x + (screen_width - title_image.GetWidth()) / 2,
+  screen_y + (screen_height - title_image.GetHeight()) / 2 - 28
+);
+
+tagline_image = Image.Text("SECURE  /  LOCAL  /  IN CONTROL", 0.55, 1.0, 0.62);
+tagline_sprite = Sprite(tagline_image);
+tagline_sprite.SetPosition(
+  screen_x + (screen_width - tagline_image.GetWidth()) / 2,
+  screen_y + (screen_height - tagline_image.GetHeight()) / 2 + 28
+);
+
+prompt_sprite = Sprite();
+answer_sprite = Sprite();
+message_sprite = Sprite();
+prompt_sprite.SetOpacity(0);
+answer_sprite.SetOpacity(0);
+message_sprite.SetOpacity(0);
+
+fun show_prompt(prompt, answer) {
+  prompt_image = Image.Text(prompt, 0.85, 1.0, 0.95);
+  answer_image = Image.Text(answer, 0.0, 1.0, 0.25);
+
+  prompt_sprite.SetImage(prompt_image);
+  prompt_sprite.SetPosition(
+    screen_x + (screen_width - prompt_image.GetWidth()) / 2,
+    screen_y + screen_height * 0.66
+  );
+  prompt_sprite.SetOpacity(1);
+
+  answer_sprite.SetImage(answer_image);
+  answer_sprite.SetPosition(
+    screen_x + (screen_width - answer_image.GetWidth()) / 2,
+    screen_y + screen_height * 0.66 + prompt_image.GetHeight() + 12
+  );
+  answer_sprite.SetOpacity(1);
+}
+
+fun display_password(prompt, bullets) {
+  bullet_text = "";
+  for (i = 0; i < bullets; i++) {
+    bullet_text += "*";
+  }
+  show_prompt(prompt, bullet_text);
+}
+
+fun display_question(prompt, entry) {
+  show_prompt(prompt, entry);
+}
+
+fun display_normal() {
+  prompt_sprite.SetOpacity(0);
+  answer_sprite.SetOpacity(0);
+}
+
+fun display_message(message) {
+  message_image = Image.Text(message, 0.75, 0.90, 0.86);
+  message_sprite.SetImage(message_image);
+  message_sprite.SetPosition(
+    screen_x + (screen_width - message_image.GetWidth()) / 2,
+    screen_y + screen_height - message_image.GetHeight() - 36
+  );
+  message_sprite.SetOpacity(1);
+}
+
+Plymouth.SetDisplayPasswordFunction(display_password);
+Plymouth.SetDisplayQuestionFunction(display_question);
+Plymouth.SetDisplayNormalFunction(display_normal);
+Plymouth.SetMessageFunction(display_message);

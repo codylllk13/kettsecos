@@ -1,0 +1,12 @@
+# Local build cache and generated images
+/work/
+/out/
+/cache/
+/work-parrot/
+/kettco-menu-fix.iso
+__pycache__/
+*.py[cod]
+.venv/
+
+# Assistant run logs
+/.vscody/

@@ -1,0 +1,14 @@
+[Unit]
+Description=AegisOS forensic boot no-swap/no-automount guard
+DefaultDependencies=no
+After=systemd-remount-fs.service
+Before=swap.target udisks2.service display-manager.service
+ConditionKernelCommandLine=aegisos.forensic=1
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/libexec/aegisos-forensic-mode apply
+RemainAfterExit=yes
+
+[Install]
+WantedBy=sysinit.target

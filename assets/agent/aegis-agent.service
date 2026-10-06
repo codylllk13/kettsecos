@@ -1,0 +1,16 @@
+[Unit]
+Description=AegisOS per-user task service
+After=kettco-ollama.service
+
+[Service]
+Type=simple
+Environment=PYTHONPATH=/usr/lib/aegisos-agent
+ExecStart=/usr/bin/python3 -m aegis_agent.daemon
+Restart=on-failure
+RestartSec=2
+NoNewPrivileges=true
+ProtectSystem=full
+PrivateTmp=true
+
+[Install]
+WantedBy=default.target

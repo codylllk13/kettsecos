@@ -1,0 +1,102 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Parrot OS 7.3
+
+
+md5
+ee748d649d8c2e6a5993862064b59c5e  Parrot-home-7.3_amd64.iso
+7391e58ee90eb6f636abcff36db465ca  Parrot-security-7.3_amd64.iso
+bfaff18de60c87c7e5377b94dc59ffba  Parrot-spin-enlightenment-7.3_amd64.iso
+2b05d363c085022f7f5fc30d335c17cb  Parrot-spin-htb-7.3_amd64.iso
+1a41c61200e3438cb91e8d4846652524  Parrot-spin-lxqt-7.3_amd64.iso
+025985d08d903359d2350f1ed20255e2  Parrot-spin-mate-7.3_amd64.iso
+bed7e3dce853340a8ded0619b4ad241b  Parrot-home-7.3_amd64.ova
+d764f22bc5a139154136625aef29d5f0  Parrot-security-7.3_amd64.ova
+dab3250f5148464bf370b6d10d5bc8aa  Parrot-core-7.3_riscv64.tar.xz
+869ca1ce4b69682392943304c8b2ff66  Parrot-core-7.3_rpi.img.xz
+155edba9f52973b23df5ff69f14c6b38  Parrot-home-7.3_rpi.img.xz
+e29939e5597850044fb99728623aabb9  Parrot-security-7.3_rpi.img.xz
+0c5e2191768be95e4ca979a0d868a32a  Parrot-core-7.3_wsl.zip
+a4378fad8fc499417211b5227c6066e1  Parrot-home-7.3_amd64.qcow2.zip
+bd1f7e7693e3d9be8c20ebe0e0792147  Parrot-home-7.3_amd64.vmdk.zip
+160743b9fd624fc4babe4ef143dfad2c  Parrot-home-7.3-libvirt-amd64.box.zip
+44bffe4830f808213506db7341c7cb12  Parrot-security-7.3_amd64.qcow2.zip
+9c7bebf881b1f4a04b0e5384ab8291d2  Parrot-security-7.3_amd64.vmdk.zip
+1ccc1e0a0b0d88cb0d9c5f83fbdee9ef  Parrot-security-7.3-libvirt-amd64.box.zip
+
+sha256
+c95f8da9dd92a91c637359cacb2b970b36bf3950dac31746b83049ff0ad7a1f4  Parrot-home-7.3_amd64.iso
+fe8ec64f92d8d629b1fcae85d9fab81c87e3ff30584201e82b7c453a740cefbc  Parrot-security-7.3_amd64.iso
+5058b704005b32a42f1de6308fbb80629b41f2d0f28cdc17acca535066646013  Parrot-spin-enlightenment-7.3_amd64.iso
+2b02b9a9dbf86d4181cda5abb35f2ef1c56308d874087ba09f545605e9036cb9  Parrot-spin-htb-7.3_amd64.iso
+e6f6878dc25739347bf071d52117e68b923550803776b6f33be4daaf45e7bb4b  Parrot-spin-lxqt-7.3_amd64.iso
+4381d141b282f99222410eec545961be8448c32c64fc2af4a5208bb259c26617  Parrot-spin-mate-7.3_amd64.iso
+d41d5445027c8080764c685fddf04cda0b1583dcfe83e8e6552f6338aeb24588  Parrot-home-7.3_amd64.ova
+72cd2d809d6a50527458e29d85e84890878d9a8014c836e37ef72929cdcec28b  Parrot-security-7.3_amd64.ova
+645a486c9af62fc12d429450e5fe2310c866d70e70d545cfee6a40ca475ff0ee  Parrot-core-7.3_riscv64.tar.xz
+0b7cbecb42cec9e70ed8baca3313ba183ac09eab881b31f355141790c5f9acd5  Parrot-core-7.3_rpi.img.xz
+c2bb628956dd019ef63d4cfa4db3cd3656a1a03da6e164c4eb29600a4a8fdad1  Parrot-home-7.3_rpi.img.xz
+61bce1b7a6c16a67af4e8e273de7c763abe6c6165481a2390f0efc342757d89f  Parrot-security-7.3_rpi.img.xz
+03e00d71d5aa308e9d73b2b27bb7469097d1b01b337fc3bb23185ff53f33f4e0  Parrot-core-7.3_wsl.zip
+c8a57b7b56208e26d080fcc0b97c2f73ffdfad2c472c98e2cd2d05722e6840de  Parrot-home-7.3_amd64.qcow2.zip
+bfab60df19897bea21f681335180ea7a76b966d7743252a4081bb8e7a06cc902  Parrot-home-7.3_amd64.vmdk.zip
+5668c52d5d0bcc4e2b51c39454059a394b8ad28de71daee41d0189a7c1b36a43  Parrot-home-7.3-libvirt-amd64.box.zip
+5e0438b577d6af42e9d9f5b0c85026202b33ce98cbfeea003f17ed03457b32f2  Parrot-security-7.3_amd64.qcow2.zip
+d47779438445701fe3ac690b6bacc99aae028e9142c008d9f5896c473d0758e9  Parrot-security-7.3_amd64.vmdk.zip
+0d7e54eb66c7a16b9bc8265a18942a2c4cd2bc346546c2fe5780439bc5139cf8  Parrot-security-7.3-libvirt-amd64.box.zip
+
+sha512
+962bc7169fcea571690d9fd47f4dd747b1d42f43e7733043749e3ab47d971df1079ef18132273f0f4f41c277967dcf34797deb36e471fe9930c4cba6394f3741  Parrot-home-7.3_amd64.iso
+0b9d19656467c2956398d237af3d186c026540b340188a5dca0ab4c6c4bcaca125fa3fd8bc13b9c300b0e24bcc2fdaf989c2acaa75713d2d2d697e972af51c06  Parrot-security-7.3_amd64.iso
+9854383598bc29882d127bf7c434da7b873ce4e41ad8775c518a5bc6268d44104da0bd9a3aeb9bc8dbba8e6eae3ddd9c994804b18cfae7712b35103ac5ee2d77  Parrot-spin-enlightenment-7.3_amd64.iso
+94e368573a3d205430406d43724b0b882f6809f7b1d8dcf2cb0b0e7680cd99576bd7f6c17dfdbec380d2bbf5c3484368502fa0710d86cb165ae00d6cdecb3852  Parrot-spin-htb-7.3_amd64.iso
+827fd2f27ed49ac84d313ec08bc0eee7a3494930c1217f7803830fa8eb1618484ade8f58bb71db34d3df6f7e42d795675c5d62a491d581265cc0fc0b18064e8b  Parrot-spin-lxqt-7.3_amd64.iso
+553beef33214086e1b552bf2d67723bc776b924108cf42521117201535f87df2fdba1ea55f50e0b1f019d5a16f724607209093c1dbe8058f7b0913c7e3d0761f  Parrot-spin-mate-7.3_amd64.iso
+5cf4536ad4b4c2377223b9cd6d4ecad12c83051c443c30bd720c51d8bae921a712c25011d861ad954d36f955c265a51abf2c634ab92af3eac554ec60d7b164e5  Parrot-home-7.3_amd64.ova
+467537e189ea24d1fe3c7379d9ae09525a9b7772c859073a9b1a1b46f83251341c95596389f62a9f7ec855ac8d44e86e5c68e2d06a9e6d9bfc7e06da7a086ed3  Parrot-security-7.3_amd64.ova
+5b3273c5f9ccbef01678db2f6b5880ffaadc34123fe74c84a36ae7da0fa03f37a0953ba0490c65a4a3541c0fa12016d2746861796390ccfc5f838e1438cf3a5b  Parrot-core-7.3_riscv64.tar.xz
+88f26a3b414382095513f7868fd2a80d3cf44d33001f46ada8f3bdd2c2538de6ed4c00921b8830850f4635cc74691f2d8f2214ff2e3dbebd4bc4d9e52c85daf4  Parrot-core-7.3_rpi.img.xz
+40e0a98fc45bf6ed9a6d6b21e94c964328cf8927f48b674b67fe5e3eccae2cd52700fd22956824029bdd209c0822f6ace158f0bc174e4697c26fb73bf6db1593  Parrot-home-7.3_rpi.img.xz
+eb30492a1393fbe028e6b3d219f01c35516bea5a8560adc59373e6b5d7dffd59d58a022eae39088e563683b3d5e5af709de1eab340875991618fc6e94d7bf32a  Parrot-security-7.3_rpi.img.xz
+ae4f24b5449cca0217a1c2d0637caa6e3401452ea73cbfa362913e7b94c2e9a3b6ea096376f510641131e23c6337dbc1b2bac5bfb5d57ba4423f7409fdf52017  Parrot-core-7.3_wsl.zip
+f906536f09bc366bbcecd076439c3f98fcca087dfb49df0f1ef33190c2a704d75f40681bb2d2508f075ce01303cca82fa5f93c56142e282da4bd94593f21737e  Parrot-home-7.3_amd64.qcow2.zip
+b873871553369a52a6085e46db811ad0a99850b930a9a5defc95825ee81a41339bea9903d51f7044a716cd69b839b344cd0fd538dc03c11a6b1255e6950816bf  Parrot-home-7.3_amd64.vmdk.zip
+cfc594df3865d424c1b329701242536a6647f8cc50a854b8e197f94f8f582613e48c3927c2fe399764dcd30cf5a31efe17fbcf957ff795331ed7d9013d378d67  Parrot-home-7.3-libvirt-amd64.box.zip
+8c379cecb3d976d57d7327773e4f3f907b32bb16581f1c0b02eab1422960407d4b3e3adfefab2bcf9f1211238d8d2dade9f97761fb293980f538a4889dd42993  Parrot-security-7.3_amd64.qcow2.zip
+6d85b9d4c62aae5776ec4e987997a5ff0c3e5f1d79b5f21ba7bf5d5bdeea827e5f165b44056d08a2ac0d5c6a025a139dd934a48b11dc727c83d349644dee46c7  Parrot-security-7.3_amd64.vmdk.zip
+8da2332b8e8f02c51d1dec7f703309a23dea722de1cfca141ee784d742e94dffaa9fd5ed89ee3d29da9999544af22cd10f0ab2a1b5be55f75137cbc1a41a6fc6  Parrot-security-7.3-libvirt-amd64.box.zip
+
+
+
+this file is digitally signed. please verify its signature using PGP
+and never trust the content of this file if the signature is not valid.
+
+also never trust this file in case the signature is not performed with our official key.
+that you can retrieve from here:
+https://deb.parrot.sh/parrot/misc/archive.gpg
+
+this is the same key that Parrot Security uses for its APT repository
+and it is already installed in every Parrot Security system
+in /usr/share/keyrings/parrot-archive-keyring.gpg
+
+Follow our doumentation page to know more
+https://www.parrotsec.org/docs/configuration/hash-and-key-verification/
+
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEtxGCI0ZVLk2S2gLfeoKGrw6B7koFAmpCk70ACgkQeoKGrw6B
+7ko6LRAAjiRptaRxNau/CVNcouguz61rWLhgJ4nunh5CyhnerHwt2NrXgJSnsBsz
+HOEhjOTbTjAPpKyni0DKZ6YcttcidZWoXvPaDkqHUTkgy2gSeDSvh1Cjtr9M7YOD
+jGJjCxVNCExnZE8bT3fTTwrKgNabHOD8rDKug+/DnVD5UjTr54hjF0S5ahsGXxN8
+ZY3dOEEV4bRoa6mvDcphudclS6EsHlABsKsMTY5wcXya8+Ucq0jHSc4yFQP8ZU+Y
+7/4SKHztL4uFGlhV8TvacRKKmB1s1cvzcnLCdsGxMgOSUprI0lhlenXaoPUk+NgC
+hGwBRa8GEcEsfjN37N32v/zdNN7kjBtcC08sHvXqMqGw+q9V+MLVckEDlvN+K0oo
+4wwkXaUBy/fdHIK9u23Lh8UCP0JB2x/A2N7CSA2HeysMukj+2nkh9f3T/LPWchQA
+8+zISv0iPK0EfdzEVJ76/Ls017pGbk4xwpC/0Am3GoGPrU2tmGhhdWjDXb1xSOg3
+1FzzfnPVhJuPWqY0fwiF+/ZRwceBQY/1eOHFP0xQ+szFgUX3tPyTrhKKte1POPcx
+5H7+ZiGofoQ3/wQhqrX/kQeprgUqd69rFEag+2mJ49nyJ8DMB2dK2aYeqWdn25HK
+CGLmzBwjdigZzCPbwNXok/JQB8RbjsIGP68tNcKfIoD4kpZBu/U=
+=qimu
+-----END PGP SIGNATURE-----

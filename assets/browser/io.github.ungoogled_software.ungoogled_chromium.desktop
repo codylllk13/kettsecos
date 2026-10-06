@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Ungoogled Chromium
+Comment=Chromium with Google web services removed
+Exec=flatpak run io.github.ungoogled_software.ungoogled_chromium %U
+Icon=io.github.ungoogled_software.ungoogled_chromium
+Terminal=false
+Categories=Network;WebBrowser;
+StartupNotify=true
+MimeType=text/html;text/xml;application/xhtml+xml;x-scheme-handler/http;x-scheme-handler/https;

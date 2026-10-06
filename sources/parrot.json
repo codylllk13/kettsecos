@@ -1,0 +1,10 @@
+{
+  "version": "7.3",
+  "filename": "Parrot-security-7.3_amd64.iso",
+  "url": "https://deb.parrot.sh/parrot/iso/7.3/Parrot-security-7.3_amd64.iso",
+  "size_bytes": 8555526144,
+  "sha256": "fe8ec64f92d8d629b1fcae85d9fab81c87e3ff30584201e82b7c453a740cefbc",
+  "signer": "B711822346552E4D92DA02DF7A8286AF0E81EE4A",
+  "hashes": "parrot-7.3-signed-hashes.txt",
+  "key": "parrot-signing-key.asc"
+}

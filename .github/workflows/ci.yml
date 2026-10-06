@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  shell:
+    name: Shell scripts
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v5
+
+      - name: Check Bash syntax
+        shell: bash
+        run: |
+          mapfile -d '' -t scripts < <(git ls-files -z -- '*.sh')
+          if (( ${#scripts[@]} == 0 )); then
+            echo "No tracked shell scripts found." >&2
+            exit 1
+          fi
+
+          for script in "${scripts[@]}"; do
+            echo "bash -n $script"
+            bash -n "$script"
+          done
+
+      - name: Install ShellCheck
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends shellcheck python3-requests
+
+      - name: Run ShellCheck
+        shell: bash
+        run: |
+          mapfile -d '' -t scripts < <(git ls-files -z -- '*.sh')
+          shellcheck --external-sources "${scripts[@]}"
+
+      - name: Run focused remix checks
+        run: |
+          bash tests/test-remix.sh
+          PYTHONPATH=assets/agent python3 -m unittest discover -s tests -p 'test_*.py' -v

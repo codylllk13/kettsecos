@@ -1,0 +1,10 @@
+# AegisOS opt-in privacy routing listeners.
+# The Tor units are disabled in the image and are started by
+# aegisos-privacy-routing.service only after the owner opts in.
+ClientOnly 1
+AvoidDiskWrites 1
+VirtualAddrNetworkIPv4 10.192.0.0/10
+AutomapHostsOnResolve 1
+SocksPort 127.0.0.1:9050 IsolateClientAddr IsolateClientProtocol IsolateDestAddr IsolateDestPort
+TransPort 127.0.0.1:9040 IsolateClientAddr IsolateClientProtocol IsolateDestAddr IsolateDestPort
+DNSPort 127.0.0.1:5353

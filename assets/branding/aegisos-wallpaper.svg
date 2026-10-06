@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- KettsecOS Matrix-inspired artwork with the lllK mark. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="2560" height="1440" viewBox="0 0 2560 1440">
+  <defs>
+    <linearGradient id="bg" x2="0.9" y2="1"><stop stop-color="#020503"/><stop offset="1" stop-color="#07140a"/></linearGradient>
+    <radialGradient id="glow"><stop stop-color="#00ff41" stop-opacity=".13"/><stop offset="1" stop-color="#00ff41" stop-opacity="0"/></radialGradient>
+    <pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M64 0H0V64" fill="none" stroke="#00ff41" stroke-opacity=".055"/></pattern>
+  </defs>
+  <rect width="2560" height="1440" fill="url(#bg)"/><rect width="2560" height="1440" fill="url(#grid)"/>
+  <ellipse cx="2050" cy="690" rx="850" ry="760" fill="url(#glow)"/>
+  <g fill="#00ff41" font-family="monospace" font-size="25" opacity=".22">
+    <text x="110" y="100"><tspan x="110" dy="0">01001000</tspan><tspan x="110" dy="34">KETTSEC_01</tspan><tspan x="110" dy="34">10110100</tspan><tspan x="110" dy="34">0xA31F</tspan><tspan x="110" dy="34">01001101</tspan></text>
+    <text x="440" y="0"><tspan x="440" dy="0">10101010</tspan><tspan x="440" dy="34">0x7F2C</tspan><tspan x="440" dy="34">SECURE</tspan><tspan x="440" dy="34">11001001</tspan><tspan x="440" dy="34">00110110</tspan></text>
+    <text x="780" y="100"><tspan x="780" dy="0">01010101</tspan><tspan x="780" dy="34">SYSTEM_OK</tspan><tspan x="780" dy="34">10010110</tspan><tspan x="780" dy="34">0xCAFE</tspan><tspan x="780" dy="34">01101010</tspan></text>
+    <text x="2280" y="0"><tspan x="2280" dy="0">10110010</tspan><tspan x="2280" dy="34">KETTSEC_OS</tspan><tspan x="2280" dy="34">01000101</tspan><tspan x="2280" dy="34">0x00FF41</tspan><tspan x="2280" dy="34">10010101</tspan></text>
+  </g>
+  <g fill="#00ff41" font-family="monospace" font-size="22" opacity=".15">
+    <text x="1400" y="90"><tspan x="1400" dy="0">01001010</tspan><tspan x="1400" dy="30">11000100</tspan><tspan x="1400" dy="30">TRUST_NO_INPUT</tspan><tspan x="1400" dy="30">00110110</tspan><tspan x="1400" dy="30">10101001</tspan></text>
+    <text x="1900" y="20"><tspan x="1900" dy="0">10011010</tspan><tspan x="1900" dy="30">0xA3E15</tspan><tspan x="1900" dy="30">01001100</tspan><tspan x="1900" dy="30">11010001</tspan><tspan x="1900" dy="30">00111010</tspan></text>
+  </g>
+  <g fill="none" stroke="#00ff41" stroke-opacity=".12"><circle cx="2020" cy="700" r="500"/><circle cx="2020" cy="700" r="390"/><path d="M1440 700H2540M2020 100V1300"/></g>
+  <rect x="1715" y="410" width="690" height="565" rx="60" fill="#030805" fill-opacity=".42" stroke="#00ff41" stroke-width="6" stroke-opacity=".75"/>
+  <g transform="translate(1785 505)" fill="#00ff41">
+    <rect x="0" y="0" width="35" height="360" rx="4"/>
+    <rect x="100" y="0" width="35" height="360" rx="4"/>
+    <rect x="200" y="0" width="35" height="360" rx="4"/>
+    <rect x="320" y="0" width="40" height="360" rx="4"/>
+    <path d="M351 166 505 0h59L391 181l174 179h-60L351 196Z"/>
+  </g>
+  <g font-family="Ubuntu, DejaVu Sans, sans-serif">
+    <text x="170" y="600" fill="#d8ffe0" font-size="126" font-weight="600" letter-spacing="13">KETTSECOS</text>
+    <rect x="176" y="650" width="660" height="7" rx="3" fill="#00ff41"/>
+    <text x="176" y="730" fill="#00ff41" font-size="31" font-weight="500" letter-spacing="8">SECURE • LOCAL • IN CONTROL</text>
+    <text x="176" y="800" fill="#77a77e" font-size="26" letter-spacing="3">PARROT SECURITY  /  KDE PLASMA</text>
+  </g>
+  <path d="M0 1280c520-70 950 55 1460-10 440-55 760-160 1100-100v270H0Z" fill="#020503" fill-opacity=".7"/>
+</svg>

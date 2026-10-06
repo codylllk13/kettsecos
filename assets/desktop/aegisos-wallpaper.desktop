@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=KettsecOS wallpaper defaults
+Exec=/usr/local/bin/aegisos-set-wallpaper
+TryExec=plasma-apply-wallpaperimage
+OnlyShowIn=KDE;
+NoDisplay=true
+X-KDE-autostart-phase=1

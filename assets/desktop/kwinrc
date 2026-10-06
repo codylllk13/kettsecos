@@ -1,0 +1,13 @@
+[org.kde.kdecoration2]
+library=org.kde.breeze
+ButtonsOnLeft=
+ButtonsOnRight=IAX
+BorderSize=Normal
+
+[Windows]
+BorderlessMaximizedWindows=false
+Placement=Centered
+
+[Compositing]
+Backend=OpenGL
+Enabled=true

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=KettsecOS Local Security Model
+Comment=Open the bundled Huihui Qwen3.5 9B local model
+Exec=konsole -e ollama run huihui_ai/qwen3.5-abliterated:9b
+Icon=utilities-terminal
+Categories=System;Security;Development;
+Terminal=false

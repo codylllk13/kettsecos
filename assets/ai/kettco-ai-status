@@ -1,0 +1,16 @@
+#!/bin/sh
+set -eu
+if ! command -v ollama >/dev/null 2>&1; then
+  printf '%s\n' 'Ollama is not installed.'
+  exit 1
+fi
+if ! curl --silent --fail --max-time 3 http://127.0.0.1:11434/api/tags >/tmp/kettco-model-status.json; then
+  printf '%s\n' 'KettsecOS local model service is installed but not running. Start kettco-ollama.service.'
+  exit 1
+fi
+if grep -Fq 'qwen3.5-abliterated' /tmp/kettco-model-status.json; then
+  printf '%s\n' 'Ready: huihui_ai/qwen3.5-abliterated:9b (offline, loopback only)'
+else
+  printf '%s\n' 'Ollama is running; the bundled 9B model is not visible.'
+  exit 1
+fi

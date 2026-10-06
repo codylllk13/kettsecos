@@ -1,0 +1,11 @@
+#!/bin/sh
+set -eu
+
+marker="${XDG_STATE_HOME:-$HOME/.local/state}/aegisos/wallpaper-set"
+[ -e "$marker" ] && exit 0
+
+if command -v plasma-apply-wallpaperimage >/dev/null 2>&1; then
+  plasma-apply-wallpaperimage /usr/share/backgrounds/aegisos/aegisos-wallpaper.svg
+  install -d "$(dirname "$marker")"
+  : > "$marker"
+fi

@@ -1,0 +1,38 @@
+{
+  "codex": {
+    "version": "0.160.1",
+    "filename": "codex-linux-x64.tgz",
+    "url": "https://registry.npmjs.org/@openai/codex/-/codex-0.160.1-linux-x64.tgz",
+    "sha512_sri": "sha512-sIDhqV+bsZKKVaVFVY5iB+pAzyOz2XRm3H1KXCsSJwGj5p98qnrT0Fweo1Hfe7WnyTp8mfBNdbVzUeO+mHYugA==",
+    "size": 163294814,
+    "archive_root": "package/vendor/x86_64-unknown-linux-musl"
+  },
+  "chatgpt": {
+    "version": "26.930.51102",
+    "package": "chatgpt",
+    "filename": "chatgpt_amd64.deb",
+    "url": "https://persistent.oaistatic.com/codex-app-prod/linux/deb/latest/chatgpt_amd64.deb",
+    "sha256": "637c3c94bc50f8ee33a15e2e28ec7f92a787f0943e700efe111bc0bf0d4813b4"
+  },
+  "ollama": {
+    "version": "0.35.1",
+    "filename": "ollama-linux-amd64.tar.zst",
+    "url": "https://github.com/ollama/ollama/releases/download/v0.35.1/ollama-linux-amd64.tar.zst",
+    "sha256": "9fcd79ac4575b2bd31b992eee18b1000c8ad126b451627c8f8cd091714cfbb10"
+  },
+  "model": {
+    "registry": "registry.ollama.ai",
+    "namespace": "huihui_ai",
+    "name": "qwen3.5-abliterated",
+    "tag": "9b",
+    "manifest_sha256": "92a443adb124f5e805bbdee23fdb38fcd22a7bf00a1016b53f764e741369c600",
+    "manifest_url": "https://registry.ollama.ai/v2/huihui_ai/qwen3.5-abliterated/manifests/9b",
+    "layers": [
+      {"digest": "sha256:62387fdc497bb2f700b9fc2cd81125d89d163c5dc12c14c7e15668fe1f40731f", "size": 529},
+      {"digest": "sha256:afb54ad43a39f947407f5cabc59856348d70e072baa5c62d436332157c151bcd", "size": 6594462816},
+      {"digest": "sha256:b507b9c2f6ca642bffcd06665ea7c91f235fd32daeefdf875a0f938db05fb315", "size": 13},
+      {"digest": "sha256:7339fa418c9ad3e8e12e74ad0fd26a9cc4be8703f9c110728a992b193be85cb2", "size": 11355},
+      {"digest": "sha256:f6417cb1e26962991f8e875a93f3cb0f92bc9b4955e004881251ccbf934a19d2", "size": 42}
+    ]
+  }
+}

@@ -1,0 +1,34 @@
+---
+# Calamares requires this identifier to match the branding directory.
+componentName: aegisos
+welcomeStyleCalamares: true
+welcomeExpandingLogo: true
+windowExpanding: normal
+windowSize: 1000px,680px
+windowPlacement: center
+
+sidebar: widget
+navigation: widget
+
+strings:
+    productName: KettsecOS
+    shortProductName: KettsecOS
+    version: 3.0-preview.3
+    shortVersion: 3.0
+    versionedName: KettsecOS
+    shortVersionedName: KettsecOS 3.0-preview.3
+    bootloaderEntryName: KettsecOS
+images:
+    productLogo: "logo.svg"
+    productIcon: "icon.svg"
+    productWelcome: "logo.svg"
+
+slideshow: "show.qml"
+
+style:
+   SidebarBackground: "#030805"
+   SidebarText: "#d8ffe0"
+   SidebarTextCurrent: "#00ff41"
+   SidebarBackgroundCurrent: "#0b1b0e"
+
+slideshowAPI: 2

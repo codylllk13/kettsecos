@@ -1,0 +1,36 @@
+[Unit]
+Description=AegisOS opt-in Tor privacy routing
+Documentation=man:tor(1)
+DefaultDependencies=no
+Wants=network-pre.target local-fs.target tor@default.service
+After=local-fs.target
+Before=network-pre.target tor@default.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/sbin/aegisos-privacy apply
+ExecStop=/usr/local/sbin/aegisos-privacy remove
+TimeoutStartSec=360
+NoNewPrivileges=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectHome=yes
+ProtectSystem=strict
+ProtectClock=yes
+ProtectControlGroups=yes
+ProtectHostname=yes
+ProtectKernelLogs=yes
+ProtectKernelModules=yes
+ProtectKernelTunables=yes
+CapabilityBoundingSet=CAP_NET_ADMIN
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+RestrictNamespaces=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+SystemCallArchitectures=native
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Install AegisOS
+Comment=Install AegisOS to a disk you select
+Exec=aegisos-installer
+Icon=calamares
+Categories=System;
+Terminal=false

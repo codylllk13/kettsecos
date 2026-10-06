@@ -1,0 +1,15 @@
+{
+  "mullvad_key_fingerprint": "A1198702FC3E0A09A9AE5B75D5A1D4F266DE8DDF",
+  "tor_browser": {
+    "version": "15.0.24",
+    "filename": "tor-browser-linux-x86_64-15.0.24.tar.xz",
+    "url": "https://dist.torproject.org/torbrowser/15.0.24/tor-browser-linux-x86_64-15.0.24.tar.xz",
+    "signature_url": "https://dist.torproject.org/torbrowser/15.0.24/tor-browser-linux-x86_64-15.0.24.tar.xz.asc",
+    "sha256": "b03eefb6ebe2acb53a1d64f82c95c0df0ced9c0f9d626586e8c6c81d9805d604",
+    "signer": "EF6E286DDA85EA2A4BA7DE684E2C6E8793298290"
+  },
+  "ungoogled_chromium_flatpak": {
+    "remote": "https://dl.flathub.org/repo/flathub.flatpakrepo",
+    "app_id": "io.github.ungoogled_software.ungoogled_chromium"
+  }
+}

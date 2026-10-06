@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=KettsecOS Security Assistant
+Comment=Private local-first security assistant
+Exec=aegis-agent-ui
+Icon=utilities-terminal
+Categories=System;Security;
+Terminal=false

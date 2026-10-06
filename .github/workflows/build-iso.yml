@@ -1,0 +1,77 @@
+name: Build Parrot KettsecOS ISO
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-iso-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build amd64 live ISO
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v5
+
+      - name: Free runner disk space
+        run: |
+          sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc \
+            /usr/local/.ghcup /opt/hostedtoolcache/CodeQL
+          if command -v docker >/dev/null 2>&1; then
+            sudo docker image prune --all --force
+          fi
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends \
+            curl dosfstools flatpak gpg grub-efi-amd64-bin grub-pc-bin \
+            mtools python3 squashfs-tools xorriso
+
+      - name: Check configuration and agent
+        run: |
+          bash tests/test-remix.sh
+          PYTHONPATH=assets/agent python3 -m unittest discover -s tests -p 'test_*.py' -v
+
+      - name: Show available disk space
+        run: df -h .
+
+      - name: Build
+        run: sudo ./build-iso.sh
+
+      - name: Check source manifest and boot entries
+        run: |
+          manifest=work-parrot/iso-tree/live/filesystem.packages
+          menu=work-parrot/iso-tree/boot/grub/grub.cfg
+          test -s "$manifest"
+          for package in parrot-tools-full kde-plasma-desktop sddm kwin-x11 \
+            firefox-esr mullvad-browser mullvad-vpn network-manager firmware-realtek; do
+            grep -q "^${package}[[:space:]]" "$manifest"
+          done
+          for package in parrot-tools-full firmware-realtek nmap; do
+            if grep -Fxq "$package" work-parrot/iso-tree/live/filesystem.packages-remove; then
+              echo "Installer would remove a required package: $package" >&2
+              exit 1
+            fi
+          done
+          grep -Fq 'KettsecOS 3.0-preview.3 (forensic mode)' "$menu"
+          xorriso -indev out/kettsec-os-3.0-preview.3-amd64.iso -report_el_torito plain
+
+      - name: Upload preview ISO
+        uses: actions/upload-artifact@v4
+        with:
+          name: kettsecos-parrot-amd64
+          path: out/kettsec-os-3.0-preview.3-amd64.iso
+          if-no-files-found: error
+          retention-days: 5
+          compression-level: 0

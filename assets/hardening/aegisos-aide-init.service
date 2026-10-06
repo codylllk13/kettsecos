@@ -1,0 +1,16 @@
+[Unit]
+Description=Initialize the AegisOS AIDE file-integrity database
+Documentation=man:aideinit(8)
+After=local-fs.target
+ConditionPathExists=/usr/sbin/aideinit
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/libexec/aegisos-aide-init run
+RemainAfterExit=yes
+Nice=19
+IOSchedulingClass=idle
+TimeoutStartSec=0
+
+[Install]
+WantedBy=multi-user.target
