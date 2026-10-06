@@ -46,6 +46,8 @@ Use the penetration testing tools only against systems you own or have explicit 
 
 The ordinary live boot is temporary. The boot menus include opt-in unencrypted and LUKS2-encrypted persistence entries. Live-boot reads a `persistence.conf` file from a partition labeled `persistence`; `/ union` requests a writable overlay for system changes and the user's home. Persistence probing is restricted to removable USB media, and forensic mode does not enable persistence.
 
+For encrypted persistence, install the host package `cryptsetup-bin` before preparing the USB. The helper checks for it before writing to the drive.
+
 After building and checking the preview.3 ISO, identify the target USB by model, size and serial with `lsblk`. Prepare it with:
 
 ```bash

@@ -38,6 +38,10 @@ case "$MODE" in
   encrypted|plain) ;;
   *) usage; exit 2 ;;
 esac
+if [ "$MODE" = encrypted ] && ! command -v cryptsetup >/dev/null 2>&1; then
+  echo "Missing host dependency: cryptsetup. Install cryptsetup-bin before preparing encrypted persistence." >&2
+  exit 1
+fi
 
 DEVICE_TYPE="$(lsblk -dnro TYPE -- "$DEVICE" | tr -d '[:space:]')"
 DEVICE_TRANSPORT="$(lsblk -dnro TRAN -- "$DEVICE" | tr -d '[:space:]')"
